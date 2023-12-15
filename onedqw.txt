@@ -1,0 +1,53 @@
+function [s] = rwp(iniposn,nooftrials,qw) %range
+prob=nonzeros(qw); %nonzeros(quantumwalk(200));
+l=length(prob);
+
+for v=1:nooftrials
+    posn=iniposn;
+    
+    i=51; %for 0:0.5:5
+    %i=251; %for 0:0.1:5
+    %i=501; %for 0:0.01:5
+
+    %for 0:0.1:5
+    %ll=251-(posn*10);
+    %ul=251-(posn*10)+50;
+    
+    %for 0:0.5:5
+    ll=51-(posn*2);
+    ul=51-(posn*2)+10;
+
+    %for 0:0.05:5
+    %ll=501-(posn*20);
+    %ul=501-(posn*20)+100;
+
+
+    r=0;
+
+    while((ll<i) && (i<ul))
+        
+        nxtposnin=randi([i-1,i+1]);
+        r=prob(nxtposnin)/prob(i);
+
+        u=rand;
+
+        if(r>u)
+            i=nxtposnin;
+        else
+            i=i+0;
+        end
+
+    end
+
+     if(i<=ll) %boundary condition
+       rw(v)=4;
+     elseif(ul<=i) %boundary condition
+       rw(v)=0;
+     end 
+
+end
+
+s=sum(rw)/nooftrials;
+
+end
+

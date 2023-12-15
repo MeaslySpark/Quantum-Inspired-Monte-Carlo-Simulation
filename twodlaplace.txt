@@ -1,0 +1,34 @@
+function [s] = twodlaplace(c,m,t) %intial posn , no. of random walks
+n=t;
+h=0.01; %step size
+rw=0;
+for x = 1:n
+  i=c;  j=m; %initial position
+    while(0<i)&&(i<15)&&(0<j)&&(j<15)
+        
+        coin=rand; %coin toss
+    
+      if(coin<=0.25)
+        i=i+h;  
+      elseif(0.25<coin)&&(coin<=0.5)
+        j=j+h;
+      elseif(0.5<coin)&&(coin<=0.75)
+          i=i-h;
+      elseif(0.75<coin)
+          j=j-h;
+      end  
+    end 
+    
+    if(i<=0 && 15<=j)
+        rw(x)=0;
+    elseif(15<=i && 15<=j)
+        rw(x)=5;
+    elseif((0<i<15) && 15<=j)
+        rw(x)=5;
+    elseif((0<i<15) && j<=15)
+        rw(x)=0;
+    end  
+
+end
+s=sum(rw)/n; %Avg of all the outcomes of Rw 
+end

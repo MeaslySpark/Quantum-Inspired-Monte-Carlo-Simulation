@@ -1,0 +1,51 @@
+%main
+n=10000;
+i=0:0.5:5;
+
+%i=0:0.1:5;
+
+%i=0:0.05:5;
+
+tic
+qw=quantumwalk(100);
+
+%qw=quantumwalk(500);
+
+%qw=quantumwalk(1000);
+qwtime=toc;
+
+tic
+for x=1:length(i)
+    rwr(x)=onedlaplace(i(x),n);
+end
+looptimerw= toc;
+
+tic
+for x=1:length(i)
+    qwr(x)=rwp(i(x),n,qw);
+end
+looptimeqw= toc;
+
+
+%plot 
+plot(i,qwr)
+hold on
+plot(i,rwr)
+u = [0 5];
+z= [4 0];
+plot(u,z,'r')
+legend({'QW','RW','Actual'},'Location','southwest')
+title('MC WITH 50 QUANTUM WALKS')
+
+%error
+
+
+for index=1:length(i)
+g(index)= ((-4*i(index))+20)/5;
+end
+
+rwerror=sqrt(mean(((abs(rwr-g)).^2)));
+qwerror=sqrt(mean((abs(qwr-g)).^2));
+
+individualrw=abs(rwr-g);
+individualqw=abs(qwr-g);

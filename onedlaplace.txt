@@ -1,0 +1,26 @@
+function [s] = onedlaplace(c,t) %intial posn , no. of random walks
+n=t;
+h=0.01; %step size
+z=0;
+for x = 1:n
+         posn=c;
+    while(0<posn)&&(posn<5) %performing random walk
+        coin=rand; %coin flip
+      if(coin<=0.5)
+        posn=posn+h;  
+      elseif(coin>0.5)
+        posn=posn-h;
+      end
+    end
+
+    if(posn<=0) %boundary condition
+       rw(x)=4;
+       z=z+1;
+    elseif(5<=posn) %boundary condition
+       rw(x)=0;
+    end  
+
+end
+s=sum(rw)/n; %avg of outcomes of each random walk
+four=z/t; %probablity of ending at boundary1
+zer=1-four; %probablity of ending at boundary2
